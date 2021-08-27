@@ -1,0 +1,44 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.4'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id "com.microsoft.azure.azurewebapp" version "1.1.0"
+}
+
+group = 'com.amc'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '10'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+test {
+	useJUnitPlatform()
+}
+
+azurewebapp {
+    subscription = 'AZURE SUBSCRIPTION ID'
+    resourceGroup = 'amcspringbootspeechrg'
+    appName = 'amcspringbootspeechwar3'
+    pricingTier = 'S2'
+    region = 'eastus2'
+    runtime {
+      os = 'Linux'
+      webContainer = 'Java SE' // or 'Java SE' if you want to run an executable jar
+      javaVersion = 'Java 11'
+    }
+    appSettings {
+        PORT = '8080'
+    }
+    auth {
+        type = 'azure_cli' // support azure_cli, oauth2, device_code and service_principal
+    }
+}
